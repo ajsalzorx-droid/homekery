@@ -1915,6 +1915,16 @@ blockquote {
     padding-top: 10px;
   }
 
+  .hero-video {
+    object-position: center top;
+  }
+
+  .hero-overlay {
+    background:
+      linear-gradient(180deg, rgba(74, 44, 42, 0.54), rgba(141, 90, 140, 0.58)),
+      radial-gradient(circle at center, rgba(164, 56, 112, 0.14), rgba(74, 44, 42, 0.24));
+  }
+
   .hero-description {
     font-size: 0.95rem;
     line-height: 1.58;
@@ -2043,7 +2053,12 @@ blockquote {
   }
 
   .hero-content {
-    padding: 44px 0 52px;
+    padding: 34px 18px 40px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 26px;
+    background: rgba(74, 44, 42, 0.2);
+    box-shadow: 0 22px 50px rgba(74, 44, 42, 0.22);
+    backdrop-filter: blur(8px);
   }
 
   .tagline {
@@ -2062,6 +2077,10 @@ blockquote {
 
   .btn {
     width: 100%;
+  }
+
+  .hero-actions .btn {
+    min-height: 48px;
   }
 
   .category-card img {
@@ -2108,6 +2127,18 @@ blockquote {
 @media (max-width: 480px) {
   h2 {
     font-size: clamp(1.9rem, 9vw, 2.5rem);
+  }
+
+  .hero {
+    min-height: 70svh;
+  }
+
+  .hero-content {
+    padding: 30px 16px 36px;
+  }
+
+  .hero .eyebrow {
+    font-size: 0.68rem;
   }
 
   .navbar {
@@ -2165,11 +2196,11 @@ blockquote {
   }
 
   h1 {
-    font-size: clamp(2.1rem, 12vw, 2.8rem);
+    font-size: clamp(1.95rem, 11vw, 2.55rem);
   }
 
   .hero-description {
-    font-size: 0.94rem;
+    font-size: 0.9rem;
   }
 
   .category-strip,
