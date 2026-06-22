@@ -268,14 +268,35 @@ textarea:focus-visible {
 .cart-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  gap: 6px;
+  width: 52px;
   border: 1px solid rgba(164, 56, 112, 0.18);
   background: rgba(255, 255, 255, 0.88);
   color: var(--berry);
-  padding: 10px 16px;
+  padding: 8px;
 }
 
-.cart-toggle span {
+.cart-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.22rem;
+  line-height: 1;
+}
+
+.cart-icon svg,
+.header-cta svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.4;
+}
+
+.cart-count {
   min-width: 24px;
   border-radius: 999px;
   background: var(--berry);
@@ -504,6 +525,9 @@ textarea:focus-visible {
 }
 
 .header-cta {
+  flex: 0 0 auto;
+  width: 50px;
+  min-width: 50px;
   min-height: 44px;
   display: inline-flex;
   align-items: center;
@@ -511,10 +535,18 @@ textarea:focus-visible {
   border-radius: 999px;
   background: var(--berry);
   color: var(--white);
-  font-size: 0.88rem;
+  font-size: 1.1rem;
   font-weight: 700;
-  padding: 12px 20px;
+  padding: 10px;
+  text-align: center;
+  white-space: nowrap;
   box-shadow: 0 12px 28px rgba(164, 56, 112, 0.22);
+}
+
+.header-cta span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .menu-toggle {
@@ -1789,19 +1821,22 @@ blockquote {
 
   .menu-toggle {
     display: block;
+    order: 4;
   }
 
   .header-cta {
-    display: none;
+    order: 2;
+    width: 46px;
+    min-width: 46px;
   }
 
   .header-search {
-    order: 3;
-    flex: 1 1 calc(100% - 76px);
+    order: 5;
+    flex: 1 1 100%;
   }
 
   .cart-shell {
-    order: 4;
+    order: 3;
     flex: 0 0 auto;
   }
 
@@ -2061,6 +2096,21 @@ blockquote {
 @media (max-width: 480px) {
   h2 {
     font-size: clamp(1.9rem, 9vw, 2.5rem);
+  }
+
+  .navbar {
+    gap: 8px;
+  }
+
+  .logo-image img {
+    width: 132px;
+    height: 48px;
+  }
+
+  .cart-toggle,
+  .header-cta {
+    width: 46px;
+    min-width: 46px;
   }
 
   .section-heading {

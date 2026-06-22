@@ -51,8 +51,14 @@
       </div>
 
       <div class="cart-shell">
-        <button class="cart-toggle" type="button" aria-expanded="false" aria-controls="cart-panel">
-          Cart <span id="cart-count">0</span>
+        <button class="cart-toggle" type="button" aria-label="Open cart" aria-expanded="false" aria-controls="cart-panel">
+          <span class="cart-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false">
+              <path d="M6.3 6h15.1l-1.7 8.4a2 2 0 0 1-2 1.6H9.1a2 2 0 0 1-2-1.7L5.7 3.9H3" />
+              <path d="M9.4 20.2h.1M17.4 20.2h.1" />
+            </svg>
+          </span>
+          <span class="cart-count" id="cart-count">0</span>
         </button>
         <div class="cart-panel" id="cart-panel" aria-hidden="true">
           <div class="cart-panel-head">
@@ -68,7 +74,14 @@
         </div>
       </div>
 
-      <a class="header-cta" href="https://wa.me/918078747875?text=Hello%20Homekery%2C%20I%20would%20like%20to%20order%20a%20cake." target="_blank" rel="noopener">Order Now</a>
+      <a class="header-cta" href="https://wa.me/918078747875?text=Hello%20Homekery%2C%20I%20would%20like%20to%20order%20a%20cake." target="_blank" rel="noopener" aria-label="Order on WhatsApp">
+        <span aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false">
+            <path d="M7 7h10v10" />
+            <path d="M7 17 17 7" />
+          </svg>
+        </span>
+      </a>
     </nav>
   </header>
 
