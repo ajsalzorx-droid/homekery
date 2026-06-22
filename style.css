@@ -78,7 +78,7 @@ a {
 
 .navbar {
   width: min(1180px, calc(100% - 40px));
-  min-height: 76px;
+  min-height: 112px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -93,6 +93,25 @@ a {
   font-size: 2rem;
   font-weight: 800;
   letter-spacing: 0;
+}
+
+.logo-image,
+.footer-logo-image {
+  display: inline-flex;
+  align-items: center;
+}
+
+.logo-image img {
+  width: 310px;
+  height: 108px;
+  object-fit: contain;
+}
+
+.footer-logo-image img {
+  width: 300px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.18));
 }
 
 .nav-menu {
@@ -977,7 +996,7 @@ blockquote {
 
 @media (max-width: 760px) {
   .navbar {
-    min-height: 70px;
+    min-height: 92px;
   }
 
   .menu-toggle {
@@ -1079,6 +1098,11 @@ blockquote {
 
   .logo {
     font-size: 1.7rem;
+  }
+
+  .logo-image img {
+    width: 220px;
+    height: 80px;
   }
 
   .about-image img {
