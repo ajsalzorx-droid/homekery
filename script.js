@@ -8,6 +8,8 @@ const filterChips = document.querySelectorAll(".filter-chip");
 const categoryLinks = document.querySelectorAll(".category-strip a[data-filter]");
 const productCards = document.querySelectorAll(".product-card");
 const resultCount = document.querySelector("#result-count");
+const menuTabs = document.querySelectorAll(".menu-tab");
+const menuPanels = document.querySelectorAll(".menu-panel");
 const whatsAppNumber = "971500000000";
 
 const setHeaderState = () => {
@@ -83,6 +85,25 @@ categoryLinks.forEach((link) => {
 });
 
 applyProductFilter("all");
+
+const applyMenuFilter = (filter) => {
+  menuTabs.forEach((tab) => {
+    const isActive = tab.dataset.menuFilter === filter;
+    tab.classList.toggle("active", isActive);
+    tab.setAttribute("aria-pressed", String(isActive));
+  });
+
+  menuPanels.forEach((panel) => {
+    panel.classList.toggle("active", panel.dataset.menuCategory === filter);
+  });
+};
+
+menuTabs.forEach((tab) => {
+  tab.setAttribute("aria-pressed", String(tab.classList.contains("active")));
+  tab.addEventListener("click", () => applyMenuFilter(tab.dataset.menuFilter));
+});
+
+applyMenuFilter("cake-flavors");
 
 orderForm.addEventListener("submit", (event) => {
   event.preventDefault();
