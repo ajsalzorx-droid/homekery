@@ -39,6 +39,12 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
 
+      <div class="header-search" role="search">
+        <label class="sr-only" for="header-search-input">Search products</label>
+        <input id="header-search-input" type="search" placeholder="Search cake..." autocomplete="off" aria-label="Search products">
+        <div class="header-search-results" id="header-search-results" aria-live="polite"></div>
+      </div>
+
       <a class="header-cta" href="https://wa.me/971500000000?text=Hello%20Homekery%2C%20I%20would%20like%20to%20order%20a%20cake." target="_blank" rel="noopener">Order Now</a>
     </nav>
   </header>
@@ -230,6 +236,15 @@
           <button class="menu-tab" type="button" data-menu-filter="brownies-cookies">Brownies & Cookies</button>
           <button class="menu-tab" type="button" data-menu-filter="puddings">Puddings</button>
           <button class="menu-tab" type="button" data-menu-filter="tea-cakes">Tea Cakes</button>
+        </div>
+
+        <div class="menu-search reveal">
+          <label for="menu-search-input">Search cake menu</label>
+          <div class="menu-search-box">
+            <input id="menu-search-input" type="search" placeholder="Search cakes, brownies, cookies..." autocomplete="off">
+            <button class="menu-search-clear" type="button" aria-label="Clear menu search">Clear</button>
+          </div>
+          <p class="menu-search-status" id="menu-search-status" aria-live="polite"></p>
         </div>
 
         <div class="menu-table-wrap reveal">
