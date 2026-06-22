@@ -18,7 +18,17 @@ const menuRows = document.querySelectorAll(".menu-row");
 const menuTableWrap = document.querySelector(".menu-table-wrap");
 const headerSearchInput = document.querySelector("#header-search-input");
 const headerSearchResults = document.querySelector("#header-search-results");
+const voiceButtons = document.querySelectorAll(".voice-search-btn");
+const cartToggle = document.querySelector(".cart-toggle");
+const cartPanel = document.querySelector("#cart-panel");
+const cartCount = document.querySelector("#cart-count");
+const cartItems = document.querySelector("#cart-items");
+const cartEmpty = document.querySelector("#cart-empty");
+const cartOrder = document.querySelector("#cart-order");
+const cartClear = document.querySelector(".cart-clear");
+const cartClose = document.querySelector(".cart-close");
 const whatsAppNumber = "918078747875";
+const cartStorageKey = "homekeryCart";
 
 const setHeaderState = () => {
   header.classList.toggle("scrolled", window.scrollY > 24);
@@ -94,6 +104,72 @@ categoryLinks.forEach((link) => {
 });
 
 applyProductFilter("all");
+
+const getStoredCart = () => {
+  try {
+    return JSON.parse(localStorage.getItem(cartStorageKey)) || [];
+  } catch {
+    return [];
+  }
+};
+
+let cart = getStoredCart();
+
+const saveCart = () => {
+  localStorage.setItem(cartStorageKey, JSON.stringify(cart));
+};
+
+const renderCart = () => {
+  cartCount.textContent = String(cart.length);
+  cartEmpty.style.display = cart.length ? "none" : "block";
+  cartItems.innerHTML = cart.map((item, index) => `
+    <div class="cart-line">
+      <div>
+        <strong>${escapeHtml(item.name)}</strong>
+        <span>${escapeHtml(item.price || "Custom quote")}</span>
+      </div>
+      <button class="cart-remove" type="button" data-cart-index="${index}">Remove</button>
+    </div>
+  `).join("");
+
+  const message = cart.length
+    ? [
+      "Hi Homekery, I want to order:",
+      ...cart.map((item, index) => `${index + 1}. ${item.name} - ${item.price || "Custom quote"}`),
+      "",
+      "Please confirm availability and delivery."
+    ].join("\n")
+    : "Hi Homekery, I want to order a cake";
+
+  cartOrder.href = `https://wa.me/${whatsAppNumber}?text=${encodeURIComponent(message)}`;
+};
+
+const addToCart = (name, price = "") => {
+  cart.push({ name, price });
+  saveCart();
+  renderCart();
+  cartPanel.classList.add("active");
+  cartPanel.setAttribute("aria-hidden", "false");
+  cartToggle.setAttribute("aria-expanded", "true");
+};
+
+const addCartButtonsToProducts = () => {
+  productCards.forEach((card) => {
+    const priceRow = card.querySelector(".price-row");
+    const name = card.querySelector("h3")?.textContent.trim();
+    const price = card.querySelector(".price-row strong")?.textContent.trim().replace(/\s+/g, " ");
+    if (!priceRow || !name || priceRow.querySelector(".cart-add")) return;
+
+    const button = document.createElement("button");
+    button.className = "cart-add";
+    button.type = "button";
+    button.textContent = "Add";
+    button.addEventListener("click", () => addToCart(name, price));
+    priceRow.insertBefore(button, priceRow.querySelector("a"));
+  });
+};
+
+addCartButtonsToProducts();
 
 let activeMenuFilter = "cake-flavors";
 let headerSearchScrolled = false;
@@ -183,6 +259,7 @@ const applyMenuSearch = () => {
             <p>${escapeHtml(category)}</p>
           </div>
           <strong>${price}</strong>
+          <button class="cart-add" type="button" data-cart-name="${escapeHtml(name)}" data-cart-price="${escapeHtml(getRowPrice(row))}">Add</button>
         </article>
       `;
     }).join("");
@@ -298,6 +375,87 @@ const renderResultCard = (item, options = {}) => `
     </span>
   </button>
 `;
+
+cartToggle.addEventListener("click", () => {
+  const isOpen = cartPanel.classList.toggle("active");
+  cartPanel.setAttribute("aria-hidden", String(!isOpen));
+  cartToggle.setAttribute("aria-expanded", String(isOpen));
+});
+
+cartClose.addEventListener("click", () => {
+  cartPanel.classList.remove("active");
+  cartPanel.setAttribute("aria-hidden", "true");
+  cartToggle.setAttribute("aria-expanded", "false");
+});
+
+cartClear.addEventListener("click", () => {
+  cart = [];
+  saveCart();
+  renderCart();
+});
+
+cartItems.addEventListener("click", (event) => {
+  const removeButton = event.target.closest(".cart-remove");
+  if (!removeButton) return;
+  cart.splice(Number(removeButton.dataset.cartIndex), 1);
+  saveCart();
+  renderCart();
+});
+
+menuSearchResults.addEventListener("click", (event) => {
+  const addButton = event.target.closest(".cart-add");
+  if (!addButton) return;
+  addToCart(addButton.dataset.cartName, addButton.dataset.cartPrice);
+});
+
+document.addEventListener("click", (event) => {
+  if (!event.target.closest(".cart-shell") && cartPanel.classList.contains("active")) {
+    cartPanel.classList.remove("active");
+    cartPanel.setAttribute("aria-hidden", "true");
+    cartToggle.setAttribute("aria-expanded", "false");
+  }
+});
+
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+voiceButtons.forEach((button) => {
+  if (!SpeechRecognition) {
+    button.disabled = true;
+    button.title = "Voice search is not supported in this browser";
+    return;
+  }
+
+  button.addEventListener("click", () => {
+    const input = document.querySelector(`#${button.dataset.voiceTarget}`);
+    if (!input) return;
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-IN";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    button.classList.add("listening");
+    button.setAttribute("aria-label", "Listening for voice search");
+    recognition.start();
+
+    recognition.addEventListener("result", (event) => {
+      input.value = event.results[0][0].transcript;
+      input.dispatchEvent(new Event("input", { bubbles: true }));
+    });
+
+    recognition.addEventListener("end", () => {
+      button.classList.remove("listening");
+      button.setAttribute("aria-label", button.classList.contains("menu-voice") ? "Search menu by voice" : "Search by voice");
+    });
+
+    recognition.addEventListener("error", () => {
+      button.classList.remove("listening");
+      button.setAttribute("aria-label", button.classList.contains("menu-voice") ? "Search menu by voice" : "Search by voice");
+    });
+  });
+});
+
+renderCart();
 
 const renderHeaderSearch = () => {
   const query = headerSearchInput.value.trim().toLowerCase();

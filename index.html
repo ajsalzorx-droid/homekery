@@ -41,8 +41,31 @@
 
       <div class="header-search" role="search">
         <label class="sr-only" for="header-search-input">Search products</label>
-        <input id="header-search-input" type="search" placeholder="Search cake..." autocomplete="off" aria-label="Search products">
+        <div class="header-search-field">
+          <input id="header-search-input" type="search" placeholder="Search cake..." autocomplete="off" aria-label="Search products">
+          <button class="voice-search-btn" type="button" data-voice-target="header-search-input" aria-label="Search by voice">
+            <span aria-hidden="true">🎙</span>
+          </button>
+        </div>
         <div class="header-search-results" id="header-search-results" aria-live="polite"></div>
+      </div>
+
+      <div class="cart-shell">
+        <button class="cart-toggle" type="button" aria-expanded="false" aria-controls="cart-panel">
+          Cart <span id="cart-count">0</span>
+        </button>
+        <div class="cart-panel" id="cart-panel" aria-hidden="true">
+          <div class="cart-panel-head">
+            <h2>Your Cart</h2>
+            <button class="cart-close" type="button" aria-label="Close cart">Close</button>
+          </div>
+          <div class="cart-items" id="cart-items"></div>
+          <p class="cart-empty" id="cart-empty">Your cart is empty. Add a cake or dessert to order.</p>
+          <div class="cart-actions">
+            <button class="cart-clear" type="button">Clear Cart</button>
+            <a class="cart-order" id="cart-order" href="https://wa.me/918078747875" target="_blank" rel="noopener">Order Cart</a>
+          </div>
+        </div>
       </div>
 
       <a class="header-cta" href="https://wa.me/918078747875?text=Hello%20Homekery%2C%20I%20would%20like%20to%20order%20a%20cake." target="_blank" rel="noopener">Order Now</a>
@@ -51,7 +74,7 @@
 
   <main>
     <section class="hero section" id="home" aria-label="Homekery hero">
-      <video class="hero-video" autoplay muted loop playsinline poster="assets/pink-cream-berry.jpg" aria-hidden="true">
+      <video class="hero-video" autoplay muted loop playsinline preload="metadata" poster="assets/pink-cream-berry.jpg" aria-hidden="true">
         <source src="assets/homekery-hero-latest.mp4" type="video/mp4">
       </video>
       <div class="hero-overlay"></div>
@@ -84,7 +107,7 @@
     <section class="section about" id="about">
       <div class="container two-column">
         <div class="about-image reveal">
-          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85" alt="Elegant homemade chocolate cake with cream frosting">
+          <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85" alt="Elegant homemade chocolate cake with cream frosting" loading="lazy" decoding="async">
         </div>
         <div class="about-copy reveal">
           <p class="section-kicker">About Homekery</p>
@@ -127,7 +150,7 @@
         <div class="product-grid">
           <article class="product-card reveal" data-category="birthday">
             <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=800&q=85" alt="Birthday cake with candles">
+              <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?auto=format&fit=crop&w=800&q=85" alt="Birthday cake with candles" loading="lazy" decoding="async">
               <span>Best Seller</span>
             </div>
             <div class="product-info">
@@ -141,7 +164,7 @@
 
           <article class="product-card reveal" data-category="birthday">
             <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1557925923-cd4648e211a0?auto=format&fit=crop&w=800&q=85" alt="Custom floral cake">
+              <img src="https://images.unsplash.com/photo-1557925923-cd4648e211a0?auto=format&fit=crop&w=800&q=85" alt="Custom floral cake" loading="lazy" decoding="async">
               <span>Custom</span>
             </div>
             <div class="product-info">
@@ -155,7 +178,7 @@
 
           <article class="product-card reveal" data-category="wedding">
             <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1535254973040-607b474cb50d?auto=format&fit=crop&w=800&q=85" alt="Elegant wedding cake">
+              <img src="https://images.unsplash.com/photo-1535254973040-607b474cb50d?auto=format&fit=crop&w=800&q=85" alt="Elegant wedding cake" loading="lazy" decoding="async">
               <span>Premium</span>
             </div>
             <div class="product-info">
@@ -169,7 +192,7 @@
 
           <article class="product-card reveal" data-category="cupcakes">
             <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=800&q=85" alt="Decorated cupcakes">
+              <img src="https://images.unsplash.com/photo-1486427944299-d1955d23e34d?auto=format&fit=crop&w=800&q=85" alt="Decorated cupcakes" loading="lazy" decoding="async">
               <span>Box of 12</span>
             </div>
             <div class="product-info">
@@ -183,7 +206,7 @@
 
           <article class="product-card reveal" data-category="gifts">
             <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=85" alt="Assorted dessert box">
+              <img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=85" alt="Assorted dessert box" loading="lazy" decoding="async">
               <span>Gift Ready</span>
             </div>
             <div class="product-info">
@@ -197,7 +220,7 @@
 
           <article class="product-card reveal" data-category="gifts">
             <div class="product-image">
-              <img src="https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?auto=format&fit=crop&w=800&q=85" alt="Gift hamper with baked treats">
+              <img src="https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?auto=format&fit=crop&w=800&q=85" alt="Gift hamper with baked treats" loading="lazy" decoding="async">
               <span>Popular</span>
             </div>
             <div class="product-info">
@@ -242,6 +265,9 @@
           <label for="menu-search-input">Search cake menu</label>
           <div class="menu-search-box">
             <input id="menu-search-input" type="search" placeholder="Search cakes, brownies, cookies..." autocomplete="off">
+            <button class="voice-search-btn menu-voice" type="button" data-voice-target="menu-search-input" aria-label="Search menu by voice">
+              <span aria-hidden="true">🎙</span>
+            </button>
             <button class="menu-search-clear" type="button" aria-label="Clear menu search">Clear</button>
           </div>
           <p class="menu-search-status" id="menu-search-status" aria-live="polite"></p>
@@ -482,12 +508,12 @@
           <h2>Sweet Moments, Beautifully Baked</h2>
         </div>
         <div class="masonry-gallery" aria-label="Cake gallery">
-          <img class="reveal tall" src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=700&q=85" alt="Pink celebration cake">
-          <img class="reveal" src="https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=700&q=85" alt="Chocolate cake slice">
-          <img class="reveal wide" src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=900&q=85" alt="Decorated cake with berries">
-          <img class="reveal" src="https://images.unsplash.com/photo-1559620192-032c4bc4674e?auto=format&fit=crop&w=700&q=85" alt="Layer cake with berries">
-          <img class="reveal tall" src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=700&q=85" alt="Strawberry cream cake">
-          <img class="reveal" src="https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&fit=crop&w=700&q=85" alt="Cupcakes with frosting">
+          <img class="reveal tall" src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?auto=format&fit=crop&w=700&q=85" alt="Pink celebration cake" loading="lazy" decoding="async">
+          <img class="reveal" src="https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=700&q=85" alt="Chocolate cake slice" loading="lazy" decoding="async">
+          <img class="reveal wide" src="https://images.unsplash.com/photo-1571115177098-24ec42ed204d?auto=format&fit=crop&w=900&q=85" alt="Decorated cake with berries" loading="lazy" decoding="async">
+          <img class="reveal" src="https://images.unsplash.com/photo-1559620192-032c4bc4674e?auto=format&fit=crop&w=700&q=85" alt="Layer cake with berries" loading="lazy" decoding="async">
+          <img class="reveal tall" src="https://images.unsplash.com/photo-1565958011703-44f9829ba187?auto=format&fit=crop&w=700&q=85" alt="Strawberry cream cake" loading="lazy" decoding="async">
+          <img class="reveal" src="https://images.unsplash.com/photo-1602351447937-745cb720612f?auto=format&fit=crop&w=700&q=85" alt="Cupcakes with frosting" loading="lazy" decoding="async">
         </div>
       </div>
     </section>
