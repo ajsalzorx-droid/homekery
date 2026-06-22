@@ -13,11 +13,12 @@ const menuPanels = document.querySelectorAll(".menu-panel");
 const menuSearchInput = document.querySelector("#menu-search-input");
 const menuSearchClear = document.querySelector(".menu-search-clear");
 const menuSearchStatus = document.querySelector("#menu-search-status");
+const menuSearchResults = document.querySelector("#menu-search-results");
 const menuRows = document.querySelectorAll(".menu-row");
 const menuTableWrap = document.querySelector(".menu-table-wrap");
 const headerSearchInput = document.querySelector("#header-search-input");
 const headerSearchResults = document.querySelector("#header-search-results");
-const whatsAppNumber = "971500000000";
+const whatsAppNumber = "918078747875";
 
 const setHeaderState = () => {
   header.classList.toggle("scrolled", window.scrollY > 24);
@@ -45,11 +46,12 @@ const revealObserver = new IntersectionObserver(
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("visible");
-        revealObserver.unobserve(entry.target);
+      } else {
+        entry.target.classList.remove("visible");
       }
     });
   },
-  { threshold: 0.16 }
+  { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
 );
 
 revealItems.forEach((item) => revealObserver.observe(item));
@@ -94,6 +96,7 @@ categoryLinks.forEach((link) => {
 applyProductFilter("all");
 
 let activeMenuFilter = "cake-flavors";
+let headerSearchScrolled = false;
 
 const applyMenuFilter = (filter) => {
   activeMenuFilter = filter;
@@ -125,6 +128,8 @@ const applyMenuSearch = () => {
 
   if (!query) {
     menuTableWrap.classList.remove("searching");
+    menuSearchResults.classList.remove("active");
+    menuSearchResults.innerHTML = "";
     menuRows.forEach((row) => row.classList.remove("hidden"));
     menuPanels.forEach((panel) => {
       panel.classList.toggle("active", panel.dataset.menuCategory === activeMenuFilter);
@@ -139,6 +144,7 @@ const applyMenuSearch = () => {
   }
 
   let matchCount = 0;
+  const matchedRows = [];
   menuTableWrap.classList.add("searching");
 
   menuTabs.forEach((tab) => {
@@ -149,7 +155,10 @@ const applyMenuSearch = () => {
   menuRows.forEach((row) => {
     const matches = row.textContent.toLowerCase().includes(query);
     row.classList.toggle("hidden", !matches);
-    if (matches) matchCount += 1;
+    if (matches) {
+      matchCount += 1;
+      matchedRows.push(row);
+    }
   });
 
   menuPanels.forEach((panel) => {
@@ -160,6 +169,28 @@ const applyMenuSearch = () => {
   menuSearchStatus.textContent = matchCount
     ? `Showing ${matchCount} matching item${matchCount === 1 ? "" : "s"}`
     : "No menu items found. Try another search.";
+
+  if (matchCount) {
+    menuSearchResults.innerHTML = matchedRows.slice(0, 12).map((row) => {
+      const panel = row.closest(".menu-panel");
+      const category = panel?.querySelector(".menu-panel-head h3")?.textContent.trim() || "Menu";
+      const name = getRowLabel(row);
+      const price = row.querySelector("strong")?.innerHTML || "";
+      return `
+        <article class="menu-result-card">
+          <div>
+            <h3>${escapeHtml(name)}</h3>
+            <p>${escapeHtml(category)}</p>
+          </div>
+          <strong>${price}</strong>
+        </article>
+      `;
+    }).join("");
+    menuSearchResults.classList.add("active");
+  } else {
+    menuSearchResults.innerHTML = "";
+    menuSearchResults.classList.remove("active");
+  }
 };
 
 if (menuSearchInput) {
@@ -176,13 +207,49 @@ const getRowPrice = (row) => row.querySelector("strong")?.textContent.trim().rep
 
 const productSearchData = Array.from(menuRows).map((row) => {
   const panel = row.closest(".menu-panel");
+  const categoryTitle = panel?.querySelector(".menu-panel-head h3")?.textContent.trim() || "Menu";
   return {
     row,
     category: panel?.dataset.menuCategory || "cake-flavors",
+    categoryTitle,
     name: getRowLabel(row),
     price: getRowPrice(row)
   };
 }).filter((item) => item.name);
+
+const cardSearchData = Array.from(productCards).map((card) => ({
+  name: card.querySelector("h3")?.textContent.trim() || "",
+  categoryTitle: card.querySelector(".crumb")?.textContent.trim() || "Products",
+  price: card.querySelector(".price-row strong")?.textContent.trim().replace(/\s+/g, " ") || "",
+  image: card.querySelector(".product-image img")?.src || "",
+  target: "#cakes"
+})).filter((item) => item.name);
+
+const collectionSearchData = [
+  { name: "Cake Flavors", target: "cake-flavors", image: "assets/pink-cream-berry.jpg" },
+  { name: "Cheese Cake", target: "cheese-cake", image: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=300&q=80" },
+  { name: "Mousse Cake", target: "mousse-cake", image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=300&q=80" },
+  { name: "Brownies & Cookies", target: "brownies-cookies", image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=300&q=80" },
+  { name: "Puddings", target: "puddings", image: "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=300&q=80" },
+  { name: "Tea Cakes", target: "tea-cakes", image: "https://images.unsplash.com/photo-1541783245831-57d6fb0926d3?auto=format&fit=crop&w=300&q=80" }
+];
+
+const pageSearchData = [
+  { name: "About Homekery", target: "#about" },
+  { name: "Cake Menu & Price List", target: "#menu" },
+  { name: "Gallery", target: "#gallery" },
+  { name: "Reviews", target: "#reviews" },
+  { name: "Contact / Order", target: "#contact" }
+];
+
+const articleSearchData = [
+  {
+    name: "How to order a custom cake",
+    categoryTitle: "Ordering Guide",
+    image: "https://images.unsplash.com/photo-1558301211-0d8c8ddee6ec?auto=format&fit=crop&w=300&q=80",
+    target: "#contact"
+  }
+];
 
 const closeHeaderSearch = () => {
   headerSearchResults.classList.remove("active");
@@ -198,33 +265,127 @@ const selectHeaderSearchResult = (item) => {
   closeHeaderSearch();
 };
 
+const escapeHtml = (value) => value.replace(/[&<>"']/g, (char) => ({
+  "&": "&amp;",
+  "<": "&lt;",
+  ">": "&gt;",
+  '"': "&quot;",
+  "'": "&#39;"
+}[char]));
+
+const simpleMatch = (value, query) => value.toLowerCase().includes(query);
+
+const goToPage = (target) => {
+  document.querySelector(target)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  headerSearchInput.value = "";
+  closeHeaderSearch();
+};
+
+const selectCollection = (collection) => {
+  applyMenuFilter(collection.target);
+  document.querySelector("#menu").scrollIntoView({ behavior: "smooth", block: "start" });
+  headerSearchInput.value = "";
+  closeHeaderSearch();
+};
+
+const renderResultCard = (item, options = {}) => `
+  <button class="search-result-card" type="button" data-result-type="${options.type || "product"}" data-result-index="${options.index}">
+    <img src="${escapeHtml(item.image || "assets/pink-cream-berry.jpg")}" alt="">
+    <span>
+      <span class="result-eyebrow">${escapeHtml(item.categoryTitle || options.eyebrow || "Products")}</span>
+      <span class="result-name">${escapeHtml(item.name)}</span>
+      ${item.price ? `<span class="result-price">${escapeHtml(item.price)}</span>` : ""}
+    </span>
+  </button>
+`;
+
 const renderHeaderSearch = () => {
   const query = headerSearchInput.value.trim().toLowerCase();
+  const rawQuery = headerSearchInput.value.trim();
+
+  if (menuSearchInput) {
+    menuSearchInput.value = rawQuery;
+    applyMenuSearch();
+  }
 
   if (!query) {
+    headerSearchScrolled = false;
     closeHeaderSearch();
     return;
   }
 
-  const matches = productSearchData
-    .filter((item) => item.name.toLowerCase().includes(query))
-    .slice(0, 7);
+  if (!headerSearchScrolled) {
+    document.querySelector("#menu").scrollIntoView({ behavior: "smooth", block: "start" });
+    headerSearchScrolled = true;
+  }
+
+  const menuMatches = productSearchData.filter((item) => simpleMatch(item.name, query));
+  const productMatches = cardSearchData.filter((item) => simpleMatch(item.name, query));
+  const collections = collectionSearchData.filter((item) => simpleMatch(item.name, query));
+  const pages = pageSearchData.filter((item) => simpleMatch(item.name, query));
+  const articles = articleSearchData.filter((item) => simpleMatch(item.name, query));
+  const suggestions = [...new Set([
+    ...menuMatches.map((item) => item.name),
+    ...productMatches.map((item) => item.name),
+    query
+  ])].slice(0, 4);
+  const products = [...productMatches, ...menuMatches].slice(0, 3);
 
   headerSearchResults.innerHTML = "";
 
-  if (!matches.length) {
+  if (!products.length && !collections.length && !pages.length && !articles.length) {
     headerSearchResults.innerHTML = '<div class="header-search-empty">No products found</div>';
     headerSearchResults.classList.add("active");
     return;
   }
 
-  matches.forEach((item) => {
-    const button = document.createElement("button");
-    button.className = "header-search-result";
-    button.type = "button";
-    button.innerHTML = `<span>${item.name}</span><small>${item.price}</small>`;
-    button.addEventListener("click", () => selectHeaderSearchResult(item));
-    headerSearchResults.append(button);
+  headerSearchResults.innerHTML = `
+    <div class="search-panel-side">
+      <div class="search-panel-block">
+        <h3 class="search-panel-title">Suggestions</h3>
+        ${suggestions.map((item) => `<button class="search-suggestion" type="button" data-suggestion="${escapeHtml(item)}">${escapeHtml(item)}</button>`).join("")}
+      </div>
+      <div class="search-panel-block">
+        <h3 class="search-panel-title">Pages</h3>
+        ${(pages.length ? pages : pageSearchData.slice(0, 2)).map((item) => `<button class="search-page-link" type="button" data-page-target="${item.target}">${escapeHtml(item.name)}</button>`).join("")}
+      </div>
+    </div>
+    <div class="search-panel-main">
+      <div class="search-result-section">
+        <h3 class="search-panel-title">Products</h3>
+        ${products.length ? products.map((item, index) => renderResultCard(item, { type: item.row ? "menu" : "card", index })).join("") : '<div class="header-search-empty">No matching products</div>'}
+      </div>
+      <div class="search-result-section">
+        <h3 class="search-panel-title">Collections</h3>
+        ${(collections.length ? collections : collectionSearchData.slice(0, 1)).map((item, index) => renderResultCard(item, { type: "collection", index, eyebrow: "Collection" })).join("")}
+      </div>
+      <div class="search-result-section">
+        <h3 class="search-panel-title">Articles</h3>
+        ${(articles.length ? articles : articleSearchData).map((item, index) => renderResultCard(item, { type: "article", index })).join("")}
+      </div>
+    </div>
+  `;
+
+  headerSearchResults.querySelectorAll(".search-suggestion").forEach((button) => {
+    button.addEventListener("click", () => {
+      headerSearchInput.value = button.dataset.suggestion;
+      renderHeaderSearch();
+    });
+  });
+
+  headerSearchResults.querySelectorAll(".search-page-link").forEach((button) => {
+    button.addEventListener("click", () => goToPage(button.dataset.pageTarget));
+  });
+
+  headerSearchResults.querySelectorAll(".search-result-card").forEach((button) => {
+    button.addEventListener("click", () => {
+      const index = Number(button.dataset.resultIndex);
+      const type = button.dataset.resultType;
+      if (type === "menu") selectHeaderSearchResult(products[index]);
+      if (type === "card") goToPage("#cakes");
+      if (type === "collection") selectCollection((collections.length ? collections : collectionSearchData)[index]);
+      if (type === "article") goToPage((articles.length ? articles : articleSearchData)[index].target);
+    });
   });
 
   headerSearchResults.classList.add("active");
