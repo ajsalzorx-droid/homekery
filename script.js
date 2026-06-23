@@ -27,6 +27,8 @@ const cartEmpty = document.querySelector("#cart-empty");
 const cartOrder = document.querySelector("#cart-order");
 const cartClear = document.querySelector(".cart-clear");
 const cartClose = document.querySelector(".cart-close");
+const collectionPopup = document.querySelector("#collection-popup");
+const collectionPopupClose = document.querySelector(".collection-popup-close");
 const whatsAppNumber = "918078747875";
 const cartStorageKey = "homekeryCart";
 
@@ -50,6 +52,32 @@ navLinks.forEach((link) => {
     menuToggle.setAttribute("aria-expanded", "false");
   });
 });
+
+if (collectionPopup) {
+  const openCollectionPopup = () => {
+    collectionPopup.classList.add("active");
+    collectionPopup.setAttribute("aria-hidden", "false");
+  };
+
+  const closeCollectionPopup = () => {
+    collectionPopup.classList.remove("active");
+    collectionPopup.setAttribute("aria-hidden", "true");
+  };
+
+  window.setTimeout(openCollectionPopup, 900);
+  collectionPopupClose?.addEventListener("click", closeCollectionPopup);
+  collectionPopup.addEventListener("click", (event) => {
+    if (event.target === collectionPopup) closeCollectionPopup();
+  });
+
+  collectionPopup.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", closeCollectionPopup);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeCollectionPopup();
+  });
+}
 
 const revealObserver = new IntersectionObserver(
   (entries) => {
