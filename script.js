@@ -12,6 +12,7 @@ const menuTabs = document.querySelectorAll(".menu-tab");
 const menuPanels = document.querySelectorAll(".menu-panel");
 const menuSearchInput = document.querySelector("#menu-search-input");
 const menuSearchClear = document.querySelector(".menu-search-clear");
+const menuSearchSubmit = document.querySelector(".menu-search-submit");
 const menuSearchStatus = document.querySelector("#menu-search-status");
 const menuSearchResults = document.querySelector("#menu-search-results");
 const menuRows = document.querySelectorAll(".menu-row");
@@ -272,6 +273,10 @@ const applyMenuSearch = () => {
 
 if (menuSearchInput) {
   menuSearchInput.addEventListener("input", applyMenuSearch);
+  menuSearchSubmit?.addEventListener("click", () => {
+    applyMenuSearch();
+    menuSearchInput.focus();
+  });
   menuSearchClear.addEventListener("click", () => {
     menuSearchInput.value = "";
     applyMenuSearch();

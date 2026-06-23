@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20260623-menu">
 </head>
 <body>
   <div class="top-bar">Homebaker in Tirur | Wedding, Birthday & Corporate Orders | Delivery & Pickup</div>
@@ -265,10 +265,38 @@
     <section class="section menu-section" id="menu">
       <div class="container">
         <div class="section-heading reveal">
+          <span class="menu-heading-icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64" focusable="false">
+              <path d="M18 30h28a6 6 0 0 1 6 6v6H12v-6a6 6 0 0 1 6-6Z" />
+              <path d="M16 42h32v10H16z" />
+              <path d="M22 30V20h20v10" />
+              <path d="M22 20c2.8 3 6.2 3 10 0 3.8 3 7.2 3 10 0" />
+              <path d="M32 12v8" />
+              <path d="M28 15h8" />
+            </svg>
+          </span>
           <p class="section-kicker">Homekery Menu</p>
           <h2>Cake Menu & Price List</h2>
           <p>Purely homemade cakes, desserts, brownies, cookies and puddings</p>
           <p class="currency-note">All prices are shown in Indian rupees.</p>
+        </div>
+
+        <div class="menu-showcase reveal" aria-label="Featured homemade desserts">
+          <figure>
+            <img src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?auto=format&fit=crop&w=500&q=80" alt="Chocolate cake on a white dessert plate" loading="lazy">
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1562440499-64c9a111f713?auto=format&fit=crop&w=500&q=80" alt="Cheesecake slice with berry topping" loading="lazy">
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=500&q=80" alt="Premium chocolate mousse cake" loading="lazy">
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=500&q=80" alt="Brownies stacked on a plate" loading="lazy">
+          </figure>
+          <figure>
+            <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=500&q=80" alt="Cream pudding dessert on a plate" loading="lazy">
+          </figure>
         </div>
 
         <div class="menu-tabs reveal" aria-label="Cake menu categories">
@@ -281,10 +309,14 @@
         </div>
 
         <div class="menu-search reveal">
-          <label for="menu-search-input">Search cake menu</label>
+          <div class="menu-search-title">
+            <span aria-hidden="true"></span>
+            <label for="menu-search-input">Search cake menu</label>
+            <span aria-hidden="true"></span>
+          </div>
           <div class="menu-search-box">
             <input id="menu-search-input" type="search" placeholder="Search cakes, brownies, cookies..." autocomplete="off">
-            <button class="voice-search-btn menu-voice" type="button" data-voice-target="menu-search-input" aria-label="Search menu by voice">
+            <button class="menu-search-submit" type="button" aria-label="Search cake menu">
               <span aria-hidden="true">🎙</span>
             </button>
             <button class="menu-search-clear" type="button" aria-label="Clear menu search">Clear</button>
@@ -613,6 +645,6 @@
     </div>
   </footer>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20260623-menu"></script>
 </body>
 </html>
