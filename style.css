@@ -3437,7 +3437,7 @@ blockquote {
 
 .menu-search-submit {
   position: relative;
-  display: inline-grid;
+  display: none;
   width: 58px;
   height: 58px;
   flex: 0 0 58px;
@@ -3452,13 +3452,13 @@ blockquote {
 }
 
 .menu-search-box .menu-voice {
-  width: 52px;
-  height: 52px;
-  min-width: 52px;
-  min-height: 52px;
-  border: 1px solid rgba(164, 56, 112, 0.18);
-  background: rgba(231, 214, 223, 0.82);
-  box-shadow: 0 10px 24px rgba(74, 44, 42, 0.08);
+  width: 46px;
+  height: 46px;
+  min-width: 46px;
+  min-height: 46px;
+  border: 0;
+  background: var(--soft-pink);
+  box-shadow: none;
   color: var(--berry);
   transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
 }
