@@ -164,102 +164,67 @@ textarea:focus-visible {
   border: 0;
 }
 
-.collection-popup {
-  position: fixed;
-  inset: 0;
-  z-index: 4500;
-  display: grid;
-  place-items: center;
-  padding: 24px;
-  background: rgba(74, 44, 42, 0.36);
-  opacity: 0;
-  pointer-events: none;
-  visibility: hidden;
-  backdrop-filter: blur(10px);
-  transition: opacity 0.25s ease, visibility 0.25s ease;
-}
-
-.collection-popup.active {
-  opacity: 1;
-  pointer-events: auto;
-  visibility: visible;
-}
-
-.collection-popup-card {
+.hero-collection-popup {
   position: relative;
-  width: min(500px, 100%);
+  width: min(520px, 100%);
   overflow: hidden;
-  border: 1px solid rgba(255, 255, 255, 0.72);
-  border-radius: 28px;
+  margin: 24px auto 0;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 22px;
   background:
-    linear-gradient(145deg, rgba(255, 255, 255, 0.96), rgba(231, 214, 223, 0.9)),
-    var(--cream);
-  box-shadow: 0 30px 80px rgba(74, 44, 42, 0.24);
-  padding: 42px 34px 34px;
+    linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(231, 214, 223, 0.14)),
+    rgba(255, 255, 255, 0.1);
+  box-shadow: 0 18px 40px rgba(74, 44, 42, 0.16);
+  padding: 18px 20px;
   text-align: center;
-  transform: translateY(16px) scale(0.96);
-  transition: transform 0.25s ease;
+  backdrop-filter: blur(12px);
 }
 
-.collection-popup.active .collection-popup-card {
-  transform: translateY(0) scale(1);
-}
-
-.collection-popup-card::before {
+.hero-collection-popup::before {
   content: "";
   position: absolute;
-  inset: -40% auto auto 50%;
-  width: 260px;
-  height: 260px;
+  inset: auto 18% -56px 18%;
+  height: 76px;
   border-radius: 999px;
-  background: radial-gradient(circle, rgba(164, 56, 112, 0.18), rgba(164, 56, 112, 0));
-  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(248, 245, 242, 0.2), rgba(248, 245, 242, 0));
 }
 
-.collection-popup-card > * {
+.hero-collection-popup > * {
   position: relative;
   z-index: 1;
 }
 
-.collection-popup-close {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  z-index: 2;
-  width: 38px;
-  height: 38px;
-  border: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.76);
-  color: var(--berry);
-  cursor: pointer;
-  font-size: 1.45rem;
-  line-height: 1;
-  box-shadow: 0 10px 24px rgba(74, 44, 42, 0.1);
+.hero-collection-popup .section-kicker {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.64rem;
 }
 
-.collection-popup-card h2 {
-  margin-top: 10px;
-  color: var(--chocolate);
-  font-size: clamp(2rem, 4vw, 3rem);
+.hero-collection-popup h2 {
+  margin-top: 6px;
+  color: var(--white);
+  font-size: clamp(1.32rem, 3vw, 1.9rem);
 }
 
-.collection-popup-card p:not(.section-kicker) {
-  max-width: 390px;
-  margin: 16px auto 0;
-  color: rgba(74, 44, 42, 0.72);
+.hero-collection-popup p:not(.section-kicker) {
+  max-width: 420px;
+  margin: 8px auto 0;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.92rem;
+  line-height: 1.55;
 }
 
-.collection-popup-actions {
-  display: flex;
+.hero-collection-popup a {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-top: 26px;
-}
-
-.collection-popup-actions .btn {
-  min-width: 150px;
+  min-height: 38px;
+  margin-top: 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--berry);
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 8px 18px;
 }
 
 .header-search {
@@ -3092,26 +3057,18 @@ blockquote {
 }
 
 @media (max-width: 520px) {
-  .collection-popup {
-    align-items: end;
+  .hero-collection-popup {
+    margin-top: 18px;
+    border-radius: 18px;
     padding: 16px;
   }
 
-  .collection-popup-card {
-    border-radius: 24px;
-    padding: 38px 22px 24px;
+  .hero-collection-popup h2 {
+    font-size: clamp(1.2rem, 6vw, 1.55rem);
   }
 
-  .collection-popup-card h2 {
-    font-size: clamp(1.8rem, 8vw, 2.35rem);
-  }
-
-  .collection-popup-actions {
-    flex-direction: column;
-  }
-
-  .collection-popup-actions .btn {
-    width: 100%;
+  .hero-collection-popup p:not(.section-kicker) {
+    font-size: 0.86rem;
   }
 }
 
