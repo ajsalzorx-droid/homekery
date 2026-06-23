@@ -3451,6 +3451,37 @@ blockquote {
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.menu-search-box .menu-voice {
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  min-height: 52px;
+  border: 1px solid rgba(164, 56, 112, 0.18);
+  background: rgba(231, 214, 223, 0.82);
+  box-shadow: 0 10px 24px rgba(74, 44, 42, 0.08);
+  color: var(--berry);
+  transition: transform 0.3s ease, background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.menu-search-box .menu-voice svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+}
+
+.menu-search-box .menu-voice:hover,
+.menu-search-box .menu-voice:focus,
+.menu-search-box .menu-voice.listening {
+  background: var(--berry);
+  box-shadow: 0 14px 30px rgba(164, 56, 112, 0.22);
+  color: var(--white);
+  transform: translateY(-1px);
+}
+
 .menu-search-submit:hover,
 .menu-search-submit:focus {
   box-shadow: 0 18px 34px rgba(164, 56, 112, 0.3);
@@ -3632,6 +3663,13 @@ blockquote {
     width: 50px;
     height: 50px;
     flex-basis: 50px;
+  }
+
+  .menu-search-box .menu-voice {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
   }
 
   .menu-search-clear {
@@ -3894,6 +3932,13 @@ blockquote {
 
   .menu-search-box {
     min-height: 62px;
+  }
+
+  .menu-search-box .menu-voice {
+    width: 46px;
+    height: 46px;
+    min-width: 46px;
+    min-height: 46px;
   }
 
   .floating-whatsapp {
